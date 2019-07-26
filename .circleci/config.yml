@@ -1,33 +1,61 @@
 version: 2
 jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.12
+    working_directory: /go/src/github.com/maddevsio/comedian
+    steps:
+      - checkout
+      - run: echo "test1"
+      - run:
+          name: run build
+          command: |
+            echo "test2"
+            echo "test3
+  test:
+    docker:
+      - image: circleci/golang:1.12
+    working_directory: /go/src/github.com/maddevsio/comedian
+    steps:
+      - checkout
+      - run: echo "test4"
+      - run:
+          name: run test
+          command: |
+            echo "test5"
+      - run:
+          name: send report to coveralls
+          command: |
+            echo "test6"
   build_docker_image:
     machine: true
     steps:
       - checkout
       - run:
-          name: Greeting
-          command: docker build --help
-
-      - run:
-          name: Print the Current Time
-          command: date
+          name: Build docker image
+          command: |
+            docker build --help
   deploy:
-    machine:
-      enabled: true
+    machine: true
     steps:
       - run:
-          name: Deploy Over SSH
+          name: Deploy Comedian
           command: |
-            ssh $SSH_USER@$SSH_HOST "touch test_`date +%F`"
+            ssh $SSH_USER@$SSH_HOST "$DEPLOY_COMMAND"
 
 workflows:
   version: 2
   build-and-deploy:
     jobs:
+      - build
+      - test
       - build_docker_image
+          requires:
+            - build
+            - test
       - deploy:
           requires:
-            - build_docker_image
+            - build_docker_image            
           filters:
             branches:
               only: master
