@@ -49,7 +49,7 @@ workflows:
     jobs:
       - build
       - test
-      - build_docker_image
+      - build_docker_image:
           requires:
             - build
             - test
