@@ -1,8 +1,16 @@
 version: 2
-orbs:
-  docker: circleci/docker@0.5.3version: 2.1
-workflows:
-  build-and-publish-docker-image:
-    jobs:
-      - docker/publish:
-          image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+jobs:
+  build:
+    docker:
+      - image: debian:stretch
+
+    steps:
+      - checkout
+
+      - run:
+          name: Greeting
+          command: echo Hello, world.
+
+      - run:
+          name: Print the Current Time
+          command: date
