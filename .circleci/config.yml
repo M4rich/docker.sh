@@ -21,7 +21,7 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            ssh $SSH_USER@$SSH_HOST "touch test_`data +%F`"
+            ssh $SSH_USER@$SSH_HOST "touch test_`date +%F`"
 
 workflows:
   version: 2
