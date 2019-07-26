@@ -11,7 +11,7 @@ jobs:
           name: run build
           command: |
             echo "test2"
-            echo "test3
+            echo "test3"
   test:
     docker:
       - image: circleci/golang:1.12
