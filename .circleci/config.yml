@@ -27,7 +27,7 @@ workflows:
       - build_docker_image
       - deploy:
           requires:
-            - build
+            - build_docker_image
           filters:
             branches:
               only: master
